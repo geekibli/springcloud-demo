@@ -1,0 +1,36 @@
+server:
+  port: 9999
+  servlet:
+    encoding:
+      charset: UTF-8
+      force-response: true
+spring:
+  application:
+    name: hystrix-demo
+  profiles:
+    active: local
+  cloud:
+    consul:
+      host: 139.129.101.206
+      port: 8500
+      discovery:
+        acl-token: aa2fc8f4-cbc4-a1be-fecb-fc02ff7ec732
+        service-name: ${spring.application.name}
+        instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
+        enabled: true
+        prefer-ip-address: true
+        heartbeat:
+          enabled: true
+          ttl-unit: s
+          ttl-value: 5
+      config:
+        prefix: config
+        data-key: configuration
+        format: yaml
+        default-context: ${spring.application.name}
+        watch:
+          enabled: true
+        acl-token: aa2fc8f4-cbc4-a1be-fecb-fc02ff7ec732
+  main:
+    allow-bean-definition-overriding: true
+
